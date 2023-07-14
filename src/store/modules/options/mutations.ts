@@ -11,6 +11,7 @@ export enum OptionsMutationTypes {
 	SET_SEARCH_VALUE = 'OPTIONS/SET_SEARCH_VALUE',
 	SET_PAGE = 'OPTIONS/SET_PAGE',
 	SET_ITEMS_PER_PAGE = 'OPTIONS/SET_ITEMS_PER_PAGE',
+	SET_ONLY_NOT_VIEWED = 'OPTIONS/SET_ONLY_NOT_VIEWED',
 }
 
 export type Mutations<S = OptionsState> = {
@@ -19,6 +20,7 @@ export type Mutations<S = OptionsState> = {
 	[OptionsMutationTypes.SET_SEARCH_VALUE](state: S, payload: string): void;
 	[OptionsMutationTypes.SET_PAGE](state: S, payload: number): void;
 	[OptionsMutationTypes.SET_ITEMS_PER_PAGE](state: S, payload: number): void;
+	[OptionsMutationTypes.SET_ONLY_NOT_VIEWED](state: S, payload: boolean): void;
 };
 
 export const mutations: MutationTree<OptionsState> & Mutations = {
@@ -48,5 +50,11 @@ export const mutations: MutationTree<OptionsState> & Mutations = {
 		payload: number
 	) {
 		state.itemsPerPage = payload;
+	},
+	[OptionsMutationTypes.SET_ONLY_NOT_VIEWED](
+		state: OptionsState,
+		payload: boolean
+	) {
+		state.onyNotViewed = payload;
 	},
 };

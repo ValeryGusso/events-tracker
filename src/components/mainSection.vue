@@ -11,7 +11,7 @@
 				v-if="$store.state.events.events.length > 0"
 			>
 				<card-event
-					v-for="event of $store.getters.getByFilters"
+					v-for="event of $store.getters.getByFilters.events"
 					:event="event"
 					:key="event.id"
 					:searched="searched.includes(event.id)"
@@ -20,7 +20,7 @@
 			</transition-group>
 		</div>
 		<div class="content__row" ref="content" v-else>
-			<div class="content__row__title">
+			<div class="content__row__title" :style="{ '--h': extraHeight + 'px' }">
 				<p>Дата</p>
 				<p>Важность</p>
 				<p>Оборудование</p>
@@ -33,7 +33,7 @@
 				v-if="$store.state.events.events.length > 0"
 			>
 				<row-event
-					v-for="(event, i) of $store.getters.getByFilters"
+					v-for="(event, i) of $store.getters.getByFilters.events"
 					:isOdd="i % 2 > 0"
 					:event="event"
 					:key="event.id"
@@ -46,7 +46,7 @@
 			<Paginator
 				@page="setPage"
 				:rows="$store.state.options.itemsPerPage"
-				:totalRecords="$store.state.events.events.length"
+				:totalRecords="$store.getters.getByFilters.total"
 			></Paginator>
 			<Button
 				label="Выделить всё"
@@ -83,6 +83,8 @@ export default defineComponent({
 		return {
 			searched: [] as number[],
 			DisplayType,
+			totalItems: this.$store.getters.getByFilters.total,
+			extraHeight: 0,
 		};
 	},
 	methods: {
@@ -99,6 +101,8 @@ export default defineComponent({
 				this.$store.state.options.type === DisplayType.TABLE
 					? Math.floor((rect.height - 40) / 36)
 					: Math.floor(rect.height / 200);
+
+			this.extraHeight = Math.floor(rect.height % maxCol);
 
 			this.$store.commit(
 				OptionsMutationTypes.SET_ITEMS_PER_PAGE,
@@ -122,7 +126,7 @@ export default defineComponent({
 			});
 		},
 		selectAll() {
-			this.$store.getters.getByFilters.forEach((event: IEvent) => {
+			this.$store.getters.getByFilters.events.forEach((event: IEvent) => {
 				if (!event.viewed) {
 					this.searched.push(event.id);
 				}
@@ -156,6 +160,12 @@ export default defineComponent({
 		},
 		setPage(e: PageState) {
 			this.$store.commit(OptionsMutationTypes.SET_PAGE, e.page);
+		},
+	},
+	watch: {
+		['$store.state.options.type']() {
+			this.$store.commit(OptionsMutationTypes.SET_PAGE, 0);
+			this.resize();
 		},
 	},
 	mounted() {
@@ -202,7 +212,7 @@ export default defineComponent({
 .content__row__title {
 	display: grid;
 	padding: 0 24px;
-	height: 40px;
+	height: calc(40px + var(--h));
 	font-size: var(--text-xl);
 	grid-template-columns: 300px 200px 300px 1fr 200px;
 	border-bottom: 2px solid var(--color-light);
@@ -218,6 +228,7 @@ export default defineComponent({
 	width: fit-content;
 	height: fit-content;
 	display: flex;
+	padding: 8px 0;
 	column-gap: 24px;
 }
 

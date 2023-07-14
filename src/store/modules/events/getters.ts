@@ -8,42 +8,45 @@ export type Getters = {
 		state: EventsState,
 		getters: Getters,
 		root: RootState
-	): IEvent[] | null;
+	): { events: IEvent[]; total: number };
 };
 
 export const getters: GetterTree<EventsState, RootState> & Getters = {
 	getByFilters: (state, _, root) => {
-		let result = [...state.events];
+		let result = state.events.filter((event) =>
+			root.options.onyNotViewed ? !event.viewed : true
+		);
 
-		switch (root.options.search.type) {
-			case SearchType.DEVICE:
-				result = result.filter((event) =>
-					event.device.match(new RegExp(root.options.search.value, 'i'))
-				);
-				break;
-			case SearchType.MASSAGE:
-				result = result.filter((event) =>
-					event.message.match(new RegExp(root.options.search.value, 'i'))
-				);
-				break;
-			case SearchType.OPERATOR:
-				result = result.filter((event) =>
-					event.operator.match(new RegExp(root.options.search.value, 'i'))
-				);
-				break;
-			case SearchType.ALL:
-				result = result.filter(
-					(event) =>
-						event.operator.match(new RegExp(root.options.search.value, 'i')) ||
-						event.message.match(new RegExp(root.options.search.value, 'i')) ||
-						event.device.match(new RegExp(root.options.search.value, 'i'))
-				);
-				break;
+		if (root.options.search.value) {
+			const regExp = new RegExp(root.options.search.value, 'i');
+
+			switch (root.options.search.type) {
+				case SearchType.DEVICE:
+					result = result.filter((event) => event.device.match(regExp));
+					break;
+				case SearchType.MASSAGE:
+					result = result.filter((event) => event.message.match(regExp));
+					break;
+				case SearchType.OPERATOR:
+					result = result.filter((event) => event.operator.match(regExp));
+					break;
+				case SearchType.ALL:
+					result = result.filter(
+						(event) =>
+							event.operator.match(regExp) ||
+							event.message.match(regExp) ||
+							event.device.match(regExp)
+					);
+					break;
+			}
 		}
 
-		return result.slice(
-			root.options.page * root.options.itemsPerPage,
-			(root.options.page + 1) * root.options.itemsPerPage + 1
-		);
+		return {
+			events: result.slice(
+				root.options.page * root.options.itemsPerPage,
+				(root.options.page + 1) * root.options.itemsPerPage + 1
+			),
+			total: result.length,
+		};
 	},
 };

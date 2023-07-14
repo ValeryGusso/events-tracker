@@ -19,6 +19,7 @@ export interface OptionsState {
 	search: ISearch;
 	page: number;
 	itemsPerPage: number;
+	onyNotViewed: boolean;
 }
 
 export const state: OptionsState = {
@@ -26,4 +27,5 @@ export const state: OptionsState = {
 	page: 0,
 	itemsPerPage: 0,
 	search: { type: SearchType.ALL, value: '' },
+	onyNotViewed: false,
 };

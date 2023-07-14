@@ -5,7 +5,7 @@ export function getImportanceColor(importance: Importance) {
 		case Importance.LOW:
 			return '#10b981';
 		case Importance.MEDIUM:
-			return '#3b82f6';
+			return '#22d3ee';
 		case Importance.HIGH:
 			return '#eab308';
 		case Importance.CRITICAL:

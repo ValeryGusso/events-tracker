@@ -69,10 +69,10 @@ body {
 	color: var(--color-light);
 }
 header {
-	height: 10vh;
+	height: 80px;
 }
 main {
-	height: 90vh;
+	height: calc(100vh - 80px);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
