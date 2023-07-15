@@ -1,12 +1,14 @@
 import { MutationTree } from 'vuex';
 import {
 	DisplayType,
+	ImportanceFilter,
 	OptionsState,
 	SearchType,
 } from '@/store/modules/options/state';
 
 export enum OptionsMutationTypes {
 	SET_DISPLAY_TYPE = 'OPTIONS/SET_DISPLAY_TYPE',
+	SET_IMPORTANCE_TYPE = 'OPTIONS/SET_IMPORTANCE_TYPE',
 	SET_SEARCH_TYPE = 'OPTIONS/SET_SEARCH_TYPE',
 	SET_SEARCH_VALUE = 'OPTIONS/SET_SEARCH_VALUE',
 	SET_ONLY_NOT_VIEWED = 'OPTIONS/SET_ONLY_NOT_VIEWED',
@@ -15,6 +17,10 @@ export enum OptionsMutationTypes {
 
 export type Mutations<S = OptionsState> = {
 	[OptionsMutationTypes.SET_DISPLAY_TYPE](state: S, payload: DisplayType): void;
+	[OptionsMutationTypes.SET_IMPORTANCE_TYPE](
+		state: S,
+		payload: ImportanceFilter
+	): void;
 	[OptionsMutationTypes.SET_SEARCH_TYPE](state: S, payload: SearchType): void;
 	[OptionsMutationTypes.SET_SEARCH_VALUE](state: S, payload: string): void;
 	[OptionsMutationTypes.SET_ONLY_NOT_VIEWED](state: S, payload: boolean): void;
@@ -27,6 +33,12 @@ export const mutations: MutationTree<OptionsState> & Mutations = {
 		payload: DisplayType
 	) {
 		state.type = payload;
+	},
+	[OptionsMutationTypes.SET_IMPORTANCE_TYPE](
+		state: OptionsState,
+		payload: ImportanceFilter
+	) {
+		state.importance = payload;
 	},
 	[OptionsMutationTypes.SET_SEARCH_TYPE](
 		state: OptionsState,

@@ -57,8 +57,12 @@ export default defineComponent({
 			this.sendSelectedToast();
 		},
 		selectAll() {
+			if (this.$store.getters.getByFilters.notViewed === this.selected.length) {
+				return;
+			}
+
 			this.$store.getters.getByFilters.events.forEach((event: IEvent) => {
-				if (!event.viewed) {
+				if (!event.viewed && !this.selected.includes(event.id)) {
 					this.selected.push(event.id);
 				}
 			});

@@ -1,7 +1,7 @@
 import { GetterTree } from 'vuex';
 import { RootState } from '@/store';
 import { EventsState, IEvent } from './state';
-import { SearchType } from '../options/state';
+import { ImportanceAll, SearchType } from '../options/state';
 
 export type Getters = {
 	getByFilters(
@@ -16,6 +16,12 @@ export const getters: GetterTree<EventsState, RootState> & Getters = {
 		let result = state.events.filter((event) =>
 			root.options.onyNotViewed ? !event.viewed : true
 		);
+
+		if (root.options.importance !== ImportanceAll.ALL) {
+			result = result.filter(
+				(event) => event.importance === root.options.importance
+			);
+		}
 
 		if (root.options.search.value) {
 			const regExp = new RegExp(root.options.search.value, 'i');
@@ -44,6 +50,7 @@ export const getters: GetterTree<EventsState, RootState> & Getters = {
 		return {
 			events: result,
 			total: result.length,
+			notViewed: result.reduce((acc, el) => (el.viewed ? acc : acc + 1), 0),
 		};
 	},
 };

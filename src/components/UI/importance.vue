@@ -48,6 +48,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .tag {
+	width: 120px;
 	font-size: var(--text-sm);
 	color: var(--color-dark);
 }

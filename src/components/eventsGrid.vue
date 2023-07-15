@@ -10,6 +10,12 @@
 	>
 		<template #paginatorend>
 			<div class="buttons">
+				<p>
+					Всего {{ $store.getters.getByFilters.total }} событий ({{
+						$store.getters.getByFilters.notViewed
+					}}
+					непрочитанных)
+				</p>
 				<Button
 					v-if="selected.length"
 					@click="clearAll"
@@ -86,7 +92,7 @@ export default defineComponent({
 
 			const { innerWidth, innerHeight } = window;
 
-			const maxCol = Math.floor((innerWidth * 0.9) / rect.width);
+			const maxCol = Math.floor((innerWidth * 0.92) / rect.width);
 			const maxRow = Math.floor((innerHeight - 80 - 68 - 6) / rect.height);
 			this.rows = maxCol * maxRow;
 		},
@@ -141,6 +147,7 @@ export default defineComponent({
 	}
 	& p:last-child {
 		width: calc(100% - 120px);
+		padding-right: 8px;
 	}
 }
 .name {
@@ -167,6 +174,11 @@ export default defineComponent({
 }
 .buttons {
 	display: flex;
+	align-items: center;
 	column-gap: 12px;
+	& p {
+		margin-right: 12px;
+		font-size: var(--text-regular);
+	}
 }
 </style>

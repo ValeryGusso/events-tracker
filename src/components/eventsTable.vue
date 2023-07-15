@@ -9,6 +9,12 @@
 	>
 		<template #paginatorend>
 			<div class="buttons">
+				<p>
+					Всего {{ $store.getters.getByFilters.total }} событий ({{
+						$store.getters.getByFilters.notViewed
+					}}
+					непрочитанных)
+				</p>
 				<Button
 					v-if="selected.length"
 					@click="clearAll"
@@ -24,7 +30,7 @@
 				/>
 			</div>
 		</template>
-		<Column field="date" header="Дата" sortable style="width: 250px">
+		<Column field="date" header="Дата" sortable style="width: 200px">
 			<template #body="{ data }">
 				<p
 					@click="onClick(data.id)"
@@ -38,7 +44,7 @@
 				</p>
 			</template>
 		</Column>
-		<Column field="importance" header="Важность" style="width: 200px">
+		<Column field="importance" header="Важность" style="width: 150px">
 			<template #body="{ data }">
 				<p
 					@click="onClick(data.id)"
@@ -52,7 +58,7 @@
 				</p>
 			</template>
 		</Column>
-		<Column field="device" header="Оборудование" sortable style="width: 300px"
+		<Column field="device" header="Оборудование" sortable style="width: 250px"
 			><template #body="{ data }">
 				<p
 					@click="onClick(data.id)"
@@ -153,15 +159,19 @@ export default defineComponent({
 	flex-direction: column;
 	row-gap: 6px;
 }
-
 .buttons {
 	display: flex;
+	align-items: center;
 	column-gap: 12px;
+	& p {
+		margin-right: 12px;
+		font-size: var(--text-regular);
+	}
 }
 .table__text {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	padding-left: 12px;
 	width: 100%;
 	height: 37px;
 	cursor: pointer;

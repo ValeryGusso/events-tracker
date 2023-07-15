@@ -35,14 +35,14 @@ export default defineComponent({
 		},
 	},
 	beforeMount() {
-		for (let i = 0; i < 8; i++) {
+		for (let i = 0; i < 12; i++) {
 			this.createEvent();
 		}
 	},
 	mounted() {
 		this.id = setInterval(() => {
 			this.createEvent();
-		}, 3000);
+		}, 5000);
 	},
 });
 </script>
@@ -61,11 +61,12 @@ td {
 :root {
 	--color-light: #ededed;
 	--color-dark: #232527;
-	--color-transparent-green: #bbf7d07f;
+	--color-transparent-green: #bbf7d05f;
 	--color-transparent-blue: #2563eb35;
 	--transition-fast: 0.3s;
 	--transition: 0.5s;
 	--text-sm: 16px;
+	--text-regular: 20px;
 }
 body {
 	width: 100vw;

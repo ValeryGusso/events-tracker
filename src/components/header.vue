@@ -21,9 +21,25 @@
 		<div class="search">
 			<span class="p-float-label">
 				<Dropdown
+					@change="setImportanceType"
+					v-model="importanceType"
+					id="dropdown_importance"
+					:options="importanceOptions"
+					scrollHeight="260px"
+					optionLabel="name"
+					optionValue="value"
+					class="dropdown"
+					aria-describedby="dd-error"
+				/>
+				<label class="dropdown__label" for="dropdown_importance"
+					>По важности</label
+				>
+			</span>
+			<span class="p-float-label">
+				<Dropdown
 					@change="setSearchType"
 					v-model="searchParam"
-					id="dropdown"
+					id="dropdown_search"
 					:options="searchOptions"
 					scrollHeight="220px"
 					optionLabel="name"
@@ -31,7 +47,7 @@
 					class="dropdown"
 					aria-describedby="dd-error"
 				/>
-				<label class="dropdown__label" for="dropdown">Где ищем?</label>
+				<label class="dropdown__label" for="dropdown_search">Где ищем?</label>
 			</span>
 			<span class="p-float-label">
 				<input-text
@@ -52,7 +68,13 @@ import inputText from 'primevue/inputtext';
 import Dropdown from 'primevue/dropdown';
 import SelectButton from 'primevue/selectbutton';
 import Checkbox from 'primevue/checkbox';
-import { DisplayType, SearchType } from '@/store/modules/options/state';
+import {
+	DisplayType,
+	SearchType,
+	ImportanceFilter,
+	ImportanceAll,
+} from '@/store/modules/options/state';
+import { Importance } from '@/store/modules/events/state';
 import { OptionsMutationTypes } from '@/store/modules/options/mutations';
 
 export default defineComponent({
@@ -69,8 +91,16 @@ export default defineComponent({
 				{ name: 'Сообщения', value: SearchType.MASSAGE },
 				{ name: 'Ответственный', value: SearchType.OPERATOR },
 			],
+			importanceOptions: [
+				{ name: 'Все', value: ImportanceAll.ALL },
+				{ name: 'Низкая', value: Importance.LOW },
+				{ name: 'Средняя', value: Importance.MEDIUM },
+				{ name: 'Высокая', value: Importance.HIGH },
+				{ name: 'Критическая', value: Importance.CRITICAL },
+			],
 			displayType: DisplayType.TABLE,
 			searchParam: SearchType.ALL,
+			importanceType: ImportanceAll.ALL,
 			searchValue: '',
 			onlyNotViewed: false,
 		};
@@ -78,6 +108,9 @@ export default defineComponent({
 	methods: {
 		setSearchType(e: { value: SearchType }) {
 			this.$store.commit(OptionsMutationTypes.SET_SEARCH_TYPE, e.value);
+		},
+		setImportanceType(e: { value: ImportanceFilter }) {
+			this.$store.commit(OptionsMutationTypes.SET_IMPORTANCE_TYPE, e.value);
 		},
 		setDisplayType(e: { value: DisplayType }) {
 			this.$store.commit(OptionsMutationTypes.SET_DISPLAY_TYPE, e.value);
@@ -128,6 +161,6 @@ export default defineComponent({
 	}
 }
 .dropdown {
-	width: 250px;
+	width: 200px;
 }
 </style>
