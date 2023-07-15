@@ -8,7 +8,7 @@ export type Getters = {
 		state: EventsState,
 		getters: Getters,
 		root: RootState
-	): { events: IEvent[]; total: number };
+	): { events: IEvent[]; total: number; notViewed: number };
 };
 
 export const getters: GetterTree<EventsState, RootState> & Getters = {
