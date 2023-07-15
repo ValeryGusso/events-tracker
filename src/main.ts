@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import 'primevue/resources/themes/lara-light-indigo/theme.css';
+import 'primeflex/primeflex.css';
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 

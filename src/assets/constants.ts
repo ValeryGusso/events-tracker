@@ -1,5 +1,3 @@
-import { Importance } from '@/store/modules/events/state';
-
 export const names = [
 	'Смирнов И.В.',
 	'Иванов А.П.',
@@ -41,9 +39,9 @@ export const messages = [
 	'Недостаток места на жестком диске',
 	'Ошибка базы данных',
 	'Проблемы с защитой от вредоносного ПО',
-	'Неисправность компьютерного оборудования',
+	'Неисправность  оборудования',
 	'Конфликт ресурсов',
-	'Неверная настройка антивирусной программы',
+	'Неверная настройка  программы',
 	'Ошибка при установке обновлений',
 	'Сетевой перегруз',
 	'Нарушение безопасности данных',
@@ -78,12 +76,3 @@ export const devices = [
 	'Ноутбук',
 	'Камера наблюдения',
 ];
-
-export function getImportance() {
-	const num = Math.random();
-
-	if (num > 0.95) return Importance.CRITICAL;
-	if (num > 0.8) return Importance.HIGH;
-	if (num > 0.5) return Importance.MEDIUM;
-	return Importance.LOW;
-}

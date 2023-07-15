@@ -9,12 +9,12 @@ type ViewEventPayload = number[];
 
 export enum EventsMutationTypes {
 	ADD_EVENT = 'EVENTS/ADD_EVENT',
-	VIEW_EVENT = 'EVENTS/VIEW_EVENT',
+	VIEW_EVENTS = 'EVENTS/VIEW_EVENTS',
 }
 
 export type Mutations<S = EventsState> = {
 	[EventsMutationTypes.ADD_EVENT](state: S, payload: AddEventPayload): void;
-	[EventsMutationTypes.VIEW_EVENT](state: S, payload: ViewEventPayload): void;
+	[EventsMutationTypes.VIEW_EVENTS](state: S, payload: ViewEventPayload): void;
 };
 
 export const mutations: MutationTree<EventsState> & Mutations = {
@@ -29,7 +29,7 @@ export const mutations: MutationTree<EventsState> & Mutations = {
 			viewed: false,
 		});
 	},
-	[EventsMutationTypes.VIEW_EVENT](
+	[EventsMutationTypes.VIEW_EVENTS](
 		state: EventsState,
 		payload: ViewEventPayload
 	) {

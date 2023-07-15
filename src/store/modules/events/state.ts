@@ -20,15 +20,5 @@ export interface EventsState {
 }
 
 export const state: EventsState = {
-	events: [
-		{
-			id: 0,
-			viewed: false,
-			date: new Date(),
-			importance: Importance.LOW,
-			device: 'База данных',
-			message: 'Ошибка чтения с диска',
-			operator: 'Лебедев М.К.',
-		},
-	],
+	events: [],
 };

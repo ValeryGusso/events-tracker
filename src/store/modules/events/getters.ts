@@ -22,30 +22,27 @@ export const getters: GetterTree<EventsState, RootState> & Getters = {
 
 			switch (root.options.search.type) {
 				case SearchType.DEVICE:
-					result = result.filter((event) => event.device.match(regExp));
+					result = result.filter((event) => !!event.device.match(regExp));
 					break;
 				case SearchType.MASSAGE:
-					result = result.filter((event) => event.message.match(regExp));
+					result = result.filter((event) => !!event.message.match(regExp));
 					break;
 				case SearchType.OPERATOR:
-					result = result.filter((event) => event.operator.match(regExp));
+					result = result.filter((event) => !!event.operator.match(regExp));
 					break;
 				case SearchType.ALL:
 					result = result.filter(
 						(event) =>
-							event.operator.match(regExp) ||
-							event.message.match(regExp) ||
-							event.device.match(regExp)
+							!!event.operator.match(regExp) ||
+							!!event.message.match(regExp) ||
+							!!event.device.match(regExp)
 					);
 					break;
 			}
 		}
 
 		return {
-			events: result.slice(
-				root.options.page * root.options.itemsPerPage,
-				(root.options.page + 1) * root.options.itemsPerPage + 1
-			),
+			events: result,
 			total: result.length,
 		};
 	},

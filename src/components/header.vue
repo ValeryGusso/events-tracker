@@ -10,7 +10,7 @@
 				aria-labelledby="multiple"
 			/>
 			<div>
-				<h2>Только непросмотренные</h2>
+				<h3>Только непросмотренные</h3>
 				<Checkbox
 					v-model="onlyNotViewed"
 					@input="setOnlyNotViewed"
@@ -34,10 +34,14 @@
 				<label class="dropdown__label" for="dropdown">Где ищем?</label>
 			</span>
 			<span class="p-float-label">
-				<input-text v-model="searchValue" id="search" />
+				<input-text
+					v-model="searchValue"
+					id="search"
+					@focus="setLockSubmit(true)"
+					@blur="setLockSubmit(false)"
+				/>
 				<label for="search">Что ищем?</label>
 			</span>
-			<Button label="Найти!" raised />
 		</div>
 	</header>
 </template>
@@ -45,7 +49,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import inputText from 'primevue/inputtext';
-import Button from 'primevue/button';
 import Dropdown from 'primevue/dropdown';
 import SelectButton from 'primevue/selectbutton';
 import Checkbox from 'primevue/checkbox';
@@ -82,13 +85,16 @@ export default defineComponent({
 		setOnlyNotViewed(e: boolean) {
 			this.$store.commit(OptionsMutationTypes.SET_ONLY_NOT_VIEWED, e);
 		},
+		setLockSubmit(e: boolean) {
+			this.$store.commit(OptionsMutationTypes.SET_LOCK_SUBMIT, e);
+		},
 	},
 	watch: {
 		searchValue(newVal) {
 			this.$store.commit(OptionsMutationTypes.SET_SEARCH_VALUE, newVal);
 		},
 	},
-	components: { inputText, Button, Checkbox, Dropdown, SelectButton },
+	components: { inputText, Checkbox, Dropdown, SelectButton },
 });
 </script>
 

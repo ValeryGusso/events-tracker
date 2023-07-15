@@ -17,15 +17,13 @@ export interface ISearch {
 export interface OptionsState {
 	type: DisplayType;
 	search: ISearch;
-	page: number;
-	itemsPerPage: number;
 	onyNotViewed: boolean;
+	lockSubmit: boolean;
 }
 
 export const state: OptionsState = {
 	type: DisplayType.TABLE,
-	page: 0,
-	itemsPerPage: 0,
 	search: { type: SearchType.ALL, value: '' },
 	onyNotViewed: false,
+	lockSubmit: false,
 };

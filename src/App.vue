@@ -5,11 +5,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import headerVue from './components/header.vue';
-import mainSection from './components/mainSection.vue';
+import { devices, messages, names } from '@/assets/constants';
+import { getImportance } from '@/utils/get';
 import { CreateEventProps } from '@/store/modules/events/mutations';
-import { devices, messages, names, getImportance } from './assets/constants';
 import { EventsMutationTypes } from '@/store/modules/events/mutations';
+import headerVue from '@/components/header.vue';
+import mainSection from '@/components/mainSection.vue';
 
 interface Data {
 	id: null | ReturnType<typeof setInterval>;
@@ -34,14 +35,14 @@ export default defineComponent({
 		},
 	},
 	beforeMount() {
-		for (let i = 0; i < 12; i++) {
+		for (let i = 0; i < 8; i++) {
 			this.createEvent();
 		}
 	},
 	mounted() {
 		this.id = setInterval(() => {
 			this.createEvent();
-		}, 5000);
+		}, 3000);
 	},
 });
 </script>
@@ -51,20 +52,25 @@ export default defineComponent({
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+		Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+td {
+	padding: 0 !important;
 }
 :root {
 	--color-light: #ededed;
+	--color-dark: #232527;
+	--color-transparent-green: #bbf7d07f;
+	--color-transparent-blue: #2563eb35;
 	--transition-fast: 0.3s;
 	--transition: 0.5s;
-	--text-sm: 20px;
-	--text-regular: 24px;
-	--text-xl: 32px;
-	--text-xxl: 42px;
+	--text-sm: 16px;
 }
 body {
 	width: 100vw;
 	height: 100vh;
-	background-color: #232527;
+	background-color: var(--color-dark);
 	overflow: hidden;
 	color: var(--color-light);
 }
