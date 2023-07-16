@@ -10,7 +10,7 @@
 				aria-labelledby="multiple"
 			/>
 			<div>
-				<h3>Только непросмотренные</h3>
+				<p>Только непрочитанные</p>
 				<Checkbox
 					v-model="onlyNotViewed"
 					@input="setOnlyNotViewed"

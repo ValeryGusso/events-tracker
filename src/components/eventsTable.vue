@@ -10,7 +10,8 @@
 		<template #paginatorend>
 			<div class="buttons">
 				<p>
-					Всего {{ $store.getters.getByFilters.total }} событий ({{
+					Всего {{ $store.getters.getByFilters.total }}
+					{{ getCorrectEventsForm($store.getters.getByFilters.total) }} ({{
 						$store.getters.getByFilters.notViewed
 					}}
 					непрочитанных)
@@ -113,7 +114,7 @@ import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import Button from 'primevue/button';
 import importanceTag from '@/components//UI/importance.vue';
-import { getDate } from '@/utils/get';
+import { getDate, getCorrectEventsForm } from '@/utils/get';
 
 export default defineComponent({
 	data() {
@@ -123,6 +124,7 @@ export default defineComponent({
 	},
 	methods: {
 		getDate,
+		getCorrectEventsForm,
 		calculateSize() {
 			this.rows = Math.floor((window.innerHeight - 200) / 38);
 		},

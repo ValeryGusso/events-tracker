@@ -1,26 +1,7 @@
 <template>
 	<Tag
-		v-if="importance === Importance.LOW"
-		severity="success"
-		:value="Importance.LOW"
-		class="tag"
-	></Tag>
-	<Tag
-		v-if="importance === Importance.MEDIUM"
-		severity="info"
-		:value="Importance.MEDIUM"
-		class="tag"
-	></Tag>
-	<Tag
-		v-if="importance === Importance.HIGH"
-		severity="warning"
-		:value="Importance.HIGH"
-		class="tag"
-	></Tag>
-	<Tag
-		v-if="importance === Importance.CRITICAL"
-		severity="danger"
-		:value="Importance.CRITICAL"
+		:severity="getSeverity(importance)"
+		:value="importance"
 		class="tag"
 	></Tag>
 </template>
@@ -31,11 +12,25 @@ import Tag from 'primevue/tag';
 import { Importance } from '@/store/modules/events/state';
 
 export default defineComponent({
-	name: 'importanceName',
+	name: 'importanceTag',
 	data() {
 		return {
 			Importance,
 		};
+	},
+	methods: {
+		getSeverity(type: Importance) {
+			switch (type) {
+				case Importance.LOW:
+					return 'success';
+				case Importance.MEDIUM:
+					return 'info';
+				case Importance.HIGH:
+					return 'warning';
+				case Importance.CRITICAL:
+					return 'danger';
+			}
+		},
 	},
 	props: {
 		importance: { type: String as () => Importance, required: true },

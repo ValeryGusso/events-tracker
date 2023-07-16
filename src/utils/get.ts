@@ -21,3 +21,18 @@ export function getImportance() {
 	if (num > 0.5) return Importance.MEDIUM;
 	return Importance.LOW;
 }
+
+export function getCorrectEventsForm(num: number) {
+	const lastChar = num.toString().match(/\d$/);
+	const beforeLastChar = num.toString().match(/(\d)\d$/);
+
+	if (!lastChar) return 'событий';
+
+	if (beforeLastChar && beforeLastChar[1] === '1') return 'событий';
+
+	if (lastChar[0] === '1') return 'событие';
+	if (lastChar[0] === '2' || lastChar[0] === '3' || lastChar[0] === '4') {
+		return 'события';
+	}
+	return 'событий';
+}

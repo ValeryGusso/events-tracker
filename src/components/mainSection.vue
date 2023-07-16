@@ -28,6 +28,7 @@ import eventsTable from '@/components/eventsTable.vue';
 import { IEvent } from '@/store/modules/events/state';
 import { EventsMutationTypes } from '@/store/modules/events/mutations';
 import { DisplayType } from '@/store/modules/options/state';
+import { getCorrectEventsForm } from '@/utils/get';
 
 export default defineComponent({
 	data() {
@@ -37,10 +38,15 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		getCorrectEventsForm,
 		sendSelectedToast() {
 			this.$toast.add({
 				severity: 'info',
-				summary: this.selected.length + ' событий выбрано!',
+				summary:
+					this.selected.length +
+					' ' +
+					this.getCorrectEventsForm(this.selected.length) +
+					' выбрано!',
 				detail: 'Нажмите "space" чтобы отметить их прочитанными.',
 				life: 3000,
 			});
@@ -76,7 +82,7 @@ export default defineComponent({
 				severity: 'warn',
 				summary: 'Список успешно очищен!',
 				detail:
-					'Для выбора собития нажмите на него или воспользуйтесь кнопкой снизу.',
+					'Для выбора события нажмите на него или воспользуйтесь кнопкой снизу.',
 				life: 5000,
 			});
 			this.selected = [];
@@ -97,7 +103,8 @@ export default defineComponent({
 				this.$toast.add({
 					severity: 'success',
 					summary: 'Готово!',
-					detail: count + ' событий просмотренно.',
+					detail:
+						count + ' ' + this.getCorrectEventsForm(count) + ' просмотренно.',
 					life: 5000,
 				});
 			}

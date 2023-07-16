@@ -11,7 +11,8 @@
 		<template #paginatorend>
 			<div class="buttons">
 				<p>
-					Всего {{ $store.getters.getByFilters.total }} событий ({{
+					Всего {{ $store.getters.getByFilters.total }}
+					{{ getCorrectEventsForm($store.getters.getByFilters.total) }} ({{
 						$store.getters.getByFilters.notViewed
 					}}
 					непрочитанных)
@@ -77,7 +78,7 @@ import DataView from 'primevue/dataview';
 import Button from 'primevue/button';
 import importanceTag from '@/components//UI/importance.vue';
 import defaultAvatar from '@/assets/img/default_avatar.png';
-import { getDate } from '@/utils/get';
+import { getDate, getCorrectEventsForm } from '@/utils/get';
 
 export default defineComponent({
 	data() {
@@ -85,6 +86,7 @@ export default defineComponent({
 	},
 	methods: {
 		getDate,
+		getCorrectEventsForm,
 		calculateSize() {
 			const rect = (this.$refs.card as HTMLDivElement)?.getBoundingClientRect();
 
